@@ -158,6 +158,7 @@ textarea{min-height:130px;resize:vertical}
     const res = await fetch(path, { credentials: 'same-origin', ...opts, headers: opts.body instanceof FormData ? {} : { 'content-type': 'application/json', ...(opts.headers || {}) } });
     let data = null; try { data = await res.json(); } catch {}
     if (res.status === 401 && !path.startsWith('/api/auth')) { showLogin(); throw new Error('Session expirée, reconnectez-vous.'); }
+    if (!res.ok && !data) throw new Error(`L’administration ne fonctionne pas à cette adresse (erreur ${res.status}). Ouvrez https://portfolio-mohamed-ali-touihri.pages.dev/admin`);
     if (!res.ok) throw new Error((data && data.error) || `Erreur ${res.status}`);
     return data;
   }
@@ -171,7 +172,7 @@ textarea{min-height:130px;resize:vertical}
       if (me.configured === false) { showLogin(); $('#login-error').textContent = 'L’administration n’est pas encore configurée sur le serveur.'; return; }
       if (!me.authenticated) return showLogin();
       await loadApp();
-    } catch (e) { showLogin(); $('#login-error').textContent = 'Serveur injoignable. ' + e.message; }
+    } catch (e) { showLogin(); $('#login-error').textContent = e.message; }
   }
   $('#login-form').addEventListener('submit', async (e) => {
     e.preventDefault(); const btn = $('#login-btn'); btn.disabled = true; $('#login-error').textContent = '';
