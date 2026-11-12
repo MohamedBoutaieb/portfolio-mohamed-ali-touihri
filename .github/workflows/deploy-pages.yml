@@ -1,8 +1,14 @@
-name: Deploy portfolio to GitHub Pages
+name: Forward GitHub Pages to Cloudflare
+
+# The portfolio (and its /admin) is hosted on Cloudflare Pages:
+#   https://portfolio-mohamed-ali-touihri.pages.dev
+# GitHub Pages only serves a small page that forwards every old link there,
+# keeping the requested path (e.g. /admin).
 
 on:
   push:
     branches: [main]
+    paths: [redirect/**, .github/workflows/deploy-pages.yml]
   workflow_dispatch:
 
 permissions:
@@ -23,9 +29,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
-      - name: Upload static site (public/)
+      - name: Build forwarding site (every path, including 404s, forwards)
+        run: |
+          mkdir -p _site
+          cp redirect/index.html _site/index.html
+          cp redirect/index.html _site/404.html
+      - name: Upload forwarding site
         uses: actions/upload-pages-artifact@v3
         with:
-          path: public
+          path: _site
       - id: deployment
         uses: actions/deploy-pages@v4
