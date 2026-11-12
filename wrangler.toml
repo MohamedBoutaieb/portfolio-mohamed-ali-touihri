@@ -1,0 +1,17 @@
+# Cloudflare Pages: static site in public/, API in functions/, content in D1
+name = "portfolio-mohamed-ali-touihri"
+pages_build_output_dir = "./public"
+compatibility_date = "2026-11-01"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "portfolio"
+
+database_id = "11d5f599-7cc7-450c-910d-60b84c2ee13a"
+migrations_dir = "migrations"
+
+[ai]
+binding = "AI"
+
+# Secrets (set with `wrangler pages secret put`, never committed):
+#   ADMIN_USER, ADMIN_PASSWORD, SESSION_SECRET (32+ random characters)
