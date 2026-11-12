@@ -1,0 +1,20 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1794342699188,
+      "tag": "0000_normal_taskmaster",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1794394585375,
+      "tag": "0001_premium_lethal_legion",
+      "breakpoints": true
+    }
+  ]
+}
