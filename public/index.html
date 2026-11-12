@@ -26,6 +26,46 @@ html{scroll-padding-top:110px}@media(max-width:650px){html{scroll-padding-top:15
 @media(min-width:951px){.building-grid.grid-4{grid-template-columns:repeat(4,minmax(0,1fr))}}@media(min-width:701px) and (max-width:950px){.building-grid.grid-4{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:700px){.building-grid.grid-2{grid-template-columns:1fr}}.category-panels .building-category{border-top:0}.category-panels .building-card h4{font:26px/1.2 Georgia,serif;letter-spacing:-.4px;margin:22px 0 10px}.category-panels .building-card>p{margin-bottom:18px}
 @media(prefers-reduced-motion:reduce){.category-panel{animation:none}}
+</style><style id="liquid-glass">
+/* ---------- Liquid glass ---------- */
+:root{--glass-fill:linear-gradient(135deg,rgba(255,255,255,.62),rgba(255,255,255,.28));--glass-edge:rgba(255,255,255,.7);--glass-blur:blur(22px) saturate(175%);
+--glass-shadow:0 12px 32px rgba(20,45,51,.10),0 2px 6px rgba(20,45,51,.05),inset 0 1px 0 rgba(255,255,255,.9),inset 0 -1px 0 rgba(255,255,255,.25);
+--glass-tint:linear-gradient(135deg,rgba(23,74,90,.94),rgba(31,97,117,.84));--radius:22px}
+/* light wash behind everything so the glass has something to refract */
+body{background:radial-gradient(55vw 45vh at 6% 0%,rgba(23,74,90,.17),transparent 62%),radial-gradient(45vw 50vh at 100% 28%,rgba(184,105,58,.15),transparent 62%),radial-gradient(60vw 55vh at 40% 100%,rgba(31,97,117,.12),transparent 64%),var(--paper);background-attachment:fixed}
+header,.sticky-navigation,.intro,.category-index,.city-empty,.category-empty,.building-category,.building-category:nth-of-type(even),.category-empty:nth-of-type(even),.city-link,.project-role{background-color:transparent}
+.intro{background-image:none}.empty-panel,.building-card{background-image:none}
+.sticky-navigation header,.category-link,.building-card,.city-link,.construction-facts,.project-role,.empty-panel,.language-switch,.hero figcaption,.project-scope,dialog .modalbar,dialog .controls{background:var(--glass-fill);-webkit-backdrop-filter:var(--glass-blur);backdrop-filter:var(--glass-blur);border:1px solid var(--glass-edge);box-shadow:var(--glass-shadow);border-radius:var(--radius)}
+.card .num,.project-cover>span,.filters button,.construction-filters button,.modalbar button,.controls button{background:rgba(255,255,255,.5);-webkit-backdrop-filter:blur(14px) saturate(170%);backdrop-filter:blur(14px) saturate(170%);border:1px solid var(--glass-edge);border-radius:999px;box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 4px 12px rgba(20,45,51,.08)}
+/* floating pill navigation */
+.sticky-navigation{top:12px;padding:12px 16px 0;pointer-events:none}.sticky-navigation header{max-width:1320px;margin:0 auto;pointer-events:auto;border-radius:999px}
+.sticky-navigation .nav{min-height:66px;padding:0 14px 0 26px}.brand span{border-radius:999px;padding:7px 12px}
+.links a{padding:8px 14px;border-radius:999px;transition:background .25s,color .25s}.links a:hover{background:rgba(255,255,255,.55);color:var(--blue)}
+.links a[aria-current=true]{background:var(--glass-tint);color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 6px 16px rgba(23,74,90,.25)}
+/* hero */
+.hero figure{margin:22px 22px 22px 0;border-radius:32px;box-shadow:0 30px 60px rgba(20,45,51,.18)}.hero figcaption{border-radius:18px;padding:14px 20px}
+.cta,.renovation-button{background:var(--glass-tint);border:1px solid rgba(255,255,255,.25);border-radius:999px;box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 10px 24px rgba(23,74,90,.28)}
+.cta:hover,.renovation-button:hover{background:linear-gradient(135deg,var(--ochre),var(--ochre-hover));transform:translateY(-2px)}
+/* cards: lift, rounded media, specular highlight that follows the pointer */
+.category-link,.building-card,.city-link{position:relative;overflow:hidden;transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s,border-color .35s}
+.category-link:hover,.building-card:hover,.city-link:hover{transform:translateY(-4px);background:var(--glass-fill);border-color:#fff;box-shadow:0 20px 44px rgba(20,45,51,.14),inset 0 1px 0 #fff}
+.category-link::after,.building-card::after,.city-link::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;transition:opacity .3s;background:radial-gradient(320px circle at var(--mx,50%) var(--my,0%),rgba(255,255,255,.55),transparent 60%)}
+.category-link:hover::after,.building-card:hover::after,.city-link:hover::after{opacity:1}
+.category-link[aria-current=true]{background:linear-gradient(135deg,rgba(255,255,255,.8),rgba(255,255,255,.45));border-color:#fff;box-shadow:0 0 0 2px var(--blue),0 18px 40px rgba(23,74,90,.18),inset 0 1px 0 #fff}
+.card .image,.construction-frame,.renovation-image,.project-cover,.photo img{border-radius:16px;overflow:hidden}.construction-frame,.renovation-image{border-color:rgba(255,255,255,.6)}
+.project-cover img{border-radius:16px}.construction-facts{padding:22px 26px}.project-role{padding:26px 30px}
+.filters button[aria-pressed=true],.construction-filters button[aria-pressed=true]{background:var(--glass-tint);color:#fff;border-color:rgba(255,255,255,.3)}
+/* photo viewer */
+dialog{background:transparent;border-radius:28px;overflow:visible}dialog::backdrop{background:rgba(14,28,33,.72);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px)}
+dialog .modalbar{margin-bottom:10px}dialog .controls{margin-top:10px}dialog img{border-radius:18px}
+.language-switch{box-shadow:var(--glass-shadow)}
+footer{border-top-color:rgba(255,255,255,.6)}
+@media(max-width:850px){.hero figure{margin:0 16px 16px;border-radius:26px}}
+@media(max-width:650px){.sticky-navigation{top:8px;padding:8px 10px 0}.sticky-navigation header{border-radius:24px}.sticky-navigation .nav{min-height:0;padding:12px 12px 10px;gap:8px}.brand{padding-left:6px;font-size:18px}.links{flex-wrap:nowrap;overflow-x:auto;width:100%;gap:4px;scrollbar-width:none;-webkit-mask-image:linear-gradient(90deg,#000 88%,transparent);mask-image:linear-gradient(90deg,#000 88%,transparent)}.links::-webkit-scrollbar{display:none}.links a{padding:7px 12px;white-space:nowrap;flex:none}}
+/* fallbacks */
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.sticky-navigation header,.category-link,.building-card,.city-link,.construction-facts,.project-role,.empty-panel,.language-switch,.hero figcaption,.project-scope,dialog .modalbar,dialog .controls,.card .num,.project-cover>span,.filters button,.construction-filters button,.modalbar button,.controls button{background:rgba(250,248,244,.94)}}
+@media(prefers-reduced-transparency:reduce){.sticky-navigation header,.category-link,.building-card,.city-link,.construction-facts,.project-role,.empty-panel,.language-switch,.hero figcaption,.project-scope,dialog .modalbar,dialog .controls,.card .num,.project-cover>span,.filters button,.construction-filters button,.modalbar button,.controls button{background:var(--paper);-webkit-backdrop-filter:none;backdrop-filter:none}}
+@media(prefers-reduced-motion:reduce){.category-link:hover,.building-card:hover,.city-link:hover,.cta:hover{transform:none}}
 </style></head><body><div class="sticky-navigation">
 <header><nav class="wrap nav" aria-label="Navigation principale"><a class="brand" href="#accueil"><span>Home</span>Mohamed Ali Touihri</a><div class="links"><a data-tab="travaux-publics" href="#travaux-publics">Travaux publics</a><a data-tab="construction-neuve" href="#construction-neuve">Construction</a><a data-tab="renovation-amenagement" href="#renovation-amenagement">Rénovation</a><a data-tab="industriel" href="#industriel">Industriel</a><a href="#apropos">À propos</a></div></nav></header></div>
 <main><div class="hero" id="accueil"><div class="intro"><div class="eyebrow">Portfolio / Réalisations</div><h1>Du terrain<br>à l’ouvrage.</h1><p>Mohamed Ali Touihri</p><p>Mes réalisations en travaux publics, bâtiment, charpente métallique et aménagement industriel, réunies dans un même portfolio.</p><a class="cta" href="#categories">Explorer les catégories <span aria-hidden="true">↗</span></a></div><figure><img src="photos/12.jpg" alt="Vue aérienne d’un chantier de voirie et de drainage dans un quartier habité"><figcaption><span>BANDUNDU · RDC</span><span>Voirie & drainage</span></figcaption></figure></div>
@@ -313,4 +353,6 @@ document.querySelector('#language-select').addEventListener('change',e=>applyLan
 const show=id=>{panels.forEach(p=>p.hidden=p.id!==id);document.querySelectorAll('[data-tab]').forEach(a=>a.setAttribute('aria-current',String(a.dataset.tab===id)))};
 document.addEventListener('click',e=>{const a=e.target.closest('a[href^="#"]');if(!a)return;const target=document.getElementById(a.getAttribute('href').slice(1));const panel=target&&target.closest('.category-panel');if(!panel)return;e.preventDefault();show(panel.id);requestAnimationFrame(()=>target.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'}))});
 show(panels[0].id)})();
+</script><script>
+if(matchMedia('(hover:hover) and (pointer:fine)').matches)document.addEventListener('pointermove',e=>{const c=e.target.closest&&e.target.closest('.category-link,.building-card,.city-link');if(!c)return;const r=c.getBoundingClientRect();c.style.setProperty('--mx',(e.clientX-r.left)+'px');c.style.setProperty('--my',(e.clientY-r.top)+'px')},{passive:true});
 </script><script src="gallery-photo-order.js" defer></script><script src="project-task-descriptions.js" defer></script></body></html>
