@@ -401,7 +401,14 @@ document.querySelector('#language-select').addEventListener('change',e=>{const v
 </script><script>
 (()=>{const panels=[...document.querySelectorAll('.category-panel')];if(!panels.length)return;
 const show=id=>{panels.forEach(p=>p.hidden=p.id!==id);document.querySelectorAll('[data-tab]').forEach(a=>a.setAttribute('aria-current',String(a.dataset.tab===id)))};
-document.addEventListener('click',e=>{const a=e.target.closest('a[href^="#"]');if(!a)return;const target=document.getElementById(a.getAttribute('href').slice(1));const panel=target&&target.closest('.category-panel');if(!panel)return;e.preventDefault();const change=panel.hidden&&document.startViewTransition;if(change)document.startViewTransition(()=>show(panel.id));else show(panel.id);requestAnimationFrame(()=>target.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'}))});
+const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;let sid=0;
+const glideTo=y=>{const root=document.documentElement,from=scrollY,max=root.scrollHeight-innerHeight,to=Math.max(0,Math.min(max,y)),dist=to-from;if(Math.abs(dist)<2)return;const dur=Math.min(1200,Math.max(550,Math.abs(dist)*.32)),t0=performance.now(),id=++sid;root.style.scrollBehavior='auto';
+const done=()=>{if(id!==sid)return;scrollTo({top:to,behavior:'instant'});root.style.scrollBehavior='';sid++};const tick=now=>{if(id!==sid)return;const p=Math.min(1,(now-t0)/dur);scrollTo({top:from+dist*ease(p),behavior:'instant'});if(p<1)requestAnimationFrame(tick);else done()};requestAnimationFrame(tick);setTimeout(done,dur+250)};
+const cancel=()=>{sid++;document.documentElement.style.scrollBehavior=''};addEventListener('wheel',cancel,{passive:true});addEventListener('touchstart',cancel,{passive:true});addEventListener('keydown',e=>{if(['ArrowUp','ArrowDown','PageUp','PageDown','Home','End',' '].includes(e.key))cancel()});
+window.glideTo=glideTo;
+document.addEventListener('click',e=>{const a=e.target.closest('a[href^="#"]');if(!a||e.defaultPrevented)return;const id=a.getAttribute('href').slice(1);const target=id&&document.getElementById(id);if(!target)return;e.preventDefault();
+const panel=target.closest('.category-panel');if(panel&&panel.hidden)show(panel.id);const nav=document.querySelector('.sticky-navigation');const off=(nav?nav.getBoundingClientRect().height:0)+18;
+glideTo(id==='accueil'?0:target.getBoundingClientRect().top+scrollY-off);try{history.replaceState(null,'','#'+id)}catch(_){}});
 show(panels[0].id)})();
 </script><script>
 if(matchMedia('(hover:hover) and (pointer:fine)').matches)document.addEventListener('pointermove',e=>{const c=e.target.closest&&e.target.closest('.category-link,.building-card,.city-link');if(!c)return;const r=c.getBoundingClientRect();c.style.setProperty('--mx',(e.clientX-r.left)+'px');c.style.setProperty('--my',(e.clientY-r.top)+'px')},{passive:true});
