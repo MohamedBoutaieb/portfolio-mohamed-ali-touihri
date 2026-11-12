@@ -406,7 +406,7 @@ show(panels[0].id)})();
 </script><script>
 if(matchMedia('(hover:hover) and (pointer:fine)').matches)document.addEventListener('pointermove',e=>{const c=e.target.closest&&e.target.closest('.category-link,.building-card,.city-link');if(!c)return;const r=c.getBoundingClientRect();c.style.setProperty('--mx',(e.clientX-r.left)+'px');c.style.setProperty('--my',(e.clientY-r.top)+'px')},{passive:true});
 </script><script>
-(()=>{const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;const carousels=[];
+(()=>{const carousels=[];
 document.querySelectorAll('.gallery').forEach(g=>{const wrap=document.createElement('div');wrap.className='carousel';g.parentNode.insertBefore(wrap,g);
 const prev=document.createElement('button'),next=document.createElement('button'),bar=document.createElement('div');
 prev.type=next.type='button';prev.className='carousel-btn prev';next.className='carousel-btn next';prev.innerHTML='<span aria-hidden="true">←</span>';next.innerHTML='<span aria-hidden="true">→</span>';
@@ -414,7 +414,7 @@ prev.setAttribute('aria-label','Photos précédentes');next.setAttribute('aria-l
 g.tabIndex=0;wrap.append(prev,g,next,bar);
 const update=()=>{const max=g.scrollWidth-g.clientWidth;wrap.classList.toggle('no-scroll',max<4);prev.disabled=g.scrollLeft<4;next.disabled=g.scrollLeft>max-4;
 const w=g.scrollWidth?g.clientWidth/g.scrollWidth*100:100;bar.style.setProperty('--w',w+'%');bar.style.setProperty('--x',(max>0?g.scrollLeft/max*(100-w):0)+'%')};
-const step=dir=>g.scrollBy({left:dir*g.clientWidth*.85,behavior:reduce?'auto':'smooth'});
+let run=0;const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;const snaps=()=>{const gl=g.getBoundingClientRect().left-g.scrollLeft;return [...g.children].filter(c=>!c.hidden).map(c=>c.getBoundingClientRect().left-gl-6)};const step=dir=>{const max=g.scrollWidth-g.clientWidth;const want=g.scrollLeft+dir*g.clientWidth*.85;let to=snaps().reduce((b,s)=>Math.abs(s-want)<Math.abs(b-want)?s:b,want);to=Math.max(0,Math.min(max,to));if(Math.abs(to-g.scrollLeft)<2)to=dir>0?max:0;const from=g.scrollLeft,dist=to-from,dur=Math.min(950,Math.max(560,Math.abs(dist)*.55)),t0=performance.now(),id=++run;g.style.scrollSnapType='none';g.style.scrollBehavior='auto';const end=()=>{if(id!==run)return;g.scrollLeft=to;g.style.scrollSnapType='';g.style.scrollBehavior='';run++};const tick=now=>{if(id!==run)return;const p=Math.min(1,(now-t0)/dur);g.scrollLeft=from+dist*ease(p);if(p<1)requestAnimationFrame(tick);else end()};requestAnimationFrame(tick);setTimeout(end,dur+200)};g.addEventListener('wheel',()=>{run++;g.style.scrollSnapType='';g.style.scrollBehavior=''},{passive:true});g.addEventListener('pointerdown',()=>{run++;g.style.scrollSnapType='';g.style.scrollBehavior=''},{passive:true});
 prev.onclick=()=>step(-1);next.onclick=()=>step(1);g.addEventListener('scroll',update,{passive:true});
 g.addEventListener('keydown',e=>{if(e.target!==g)return;if(e.key==='ArrowRight'){e.preventDefault();step(1)}if(e.key==='ArrowLeft'){e.preventDefault();step(-1)}});
 carousels.push({g,update})});
